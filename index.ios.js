@@ -9,29 +9,49 @@ import React, {
   StyleSheet,
   Text,
   Image,
-  View
+  View,
+  ListView
 } from 'react-native';
 
-class PlasticPledge extends Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to PJ Pledge
-        </Text>
-        <Text style={styles.instructions}>
-          hello
-        </Text>
-        <Text style={styles.instructions}>
-          Press Cmd+R to reload,{'\n'}
-          Cmd+D or shake for dev menu
-          <Image source={{uri: 'http://www.whale-images.com/images_/mig/killer-whale_breach.jpg'}}
-       style={{width: 400, height: 400}} />
-        </Text>
-      </View>
-    );
+const MOCKED_PLASTIC_DATA = [
+  {name:"Coffee Mug", cost:0.1, image:{thumbnail:"https://cdn1.iconfinder.com/data/icons/food-drink-7/100/FD_align-08-512.png"}},
+  {name:"Coffee Mug", cost:0.1, image:{thumbnail:"https://cdn1.iconfinder.com/data/icons/food-drink-7/100/FD_align-08-512.png"}},
+  {name:"Coffee Mug", cost:0.1, image:{thumbnail:"https://cdn1.iconfinder.com/data/icons/food-drink-7/100/FD_align-08-512.png"}}
+]
+
+class RubbishList extends Component{
+  render(){
+    return(
+      <ListView
+        dataSource={MOCKED_PLASTIC_DATA}
+        renderRow={this.RubbishItem}
+        />
+    )
   }
 }
+
+class RubbishItem extends Component{
+  render(){
+    return(
+      <View>
+        <Text>{this.props.name}</Text>
+      </View>
+    )
+  }
+}
+
+// class PlasticPledge extends Component {
+//   render() {
+//     return (
+//       <View style={styles.container}>
+//           <Text>Welcome to PJ Pledge</Text>
+//         <Text>{movie.name}</Text>
+//         <Text>${movie.cost}</Text>
+//         <Image source={{uri:movie.image.thumbnail}}/>
+//       </View>
+//     );
+//   }
+// }
 
 const styles = StyleSheet.create({
   container: {
@@ -52,4 +72,4 @@ const styles = StyleSheet.create({
   },
 });
 
-AppRegistry.registerComponent('PlasticPledge', () => PlasticPledge);
+AppRegistry.registerComponent('PlasticPledge', () => RubbishList);
