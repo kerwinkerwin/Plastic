@@ -15,16 +15,19 @@ import React, {
 
 const MOCKED_PLASTIC_DATA = [
   {name:"Coffee Mug", cost:0.1, image:{thumbnail:"https://cdn1.iconfinder.com/data/icons/food-drink-7/100/FD_align-08-512.png"}},
-  {name:"Coffee Mug", cost:0.1, image:{thumbnail:"https://cdn1.iconfinder.com/data/icons/food-drink-7/100/FD_align-08-512.png"}},
-  {name:"Coffee Mug", cost:0.1, image:{thumbnail:"https://cdn1.iconfinder.com/data/icons/food-drink-7/100/FD_align-08-512.png"}}
+  {name:"PLastic bag", cost:0.1, image:{thumbnail:"https://cdn1.iconfinder.com/data/icons/food-drink-7/100/FD_align-08-512.png"}},
+  {name:"Coke cup", cost:0.1, image:{thumbnail:"https://cdn1.iconfinder.com/data/icons/food-drink-7/100/FD_align-08-512.png"}}
 ]
 
 class RubbishList extends Component{
   render(){
+    var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+
+    var dataSource1= ds.cloneWithRows(MOCKED_PLASTIC_DATA)
     return(
       <ListView
-        dataSource={MOCKED_PLASTIC_DATA}
-        renderRow={this.RubbishItem}
+        dataSource={dataSource1}
+        renderRow={(rowData) => <RubbishItem>{rowData}</RubbishItem>}
         />
     )
   }
@@ -35,23 +38,19 @@ class RubbishItem extends Component{
     return(
       <View>
         <Text>{this.props.name}</Text>
+        <Text>{this.props.cost}</Text>
       </View>
     )
   }
 }
 
-// class PlasticPledge extends Component {
-//   render() {
-//     return (
-//       <View style={styles.container}>
-//           <Text>Welcome to PJ Pledge</Text>
-//         <Text>{movie.name}</Text>
-//         <Text>${movie.cost}</Text>
-//         <Image source={{uri:movie.image.thumbnail}}/>
-//       </View>
-//     );
-//   }
-// }
+class PlasticPledge extends Component {
+  render() {
+    return (
+      <RubbishList>{MOCKED_PLASTIC_DATA}</RubbishList>
+    );
+  }
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -72,4 +71,4 @@ const styles = StyleSheet.create({
   },
 });
 
-AppRegistry.registerComponent('PlasticPledge', () => RubbishList);
+AppRegistry.registerComponent('PlasticPledge', () => PlasticPledge);
