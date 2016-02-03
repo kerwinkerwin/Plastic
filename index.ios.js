@@ -10,65 +10,77 @@ import React, {
   Text,
   Image,
   View,
-  ListView
+  ListView,
+  TouchableElement,
+  TouchableHighlight
 } from 'react-native';
 
-const MOCKED_PLASTIC_DATA = [
-  {name:"Coffee Mug", cost:0.1, image:{thumbnail:"https://cdn1.iconfinder.com/data/icons/food-drink-7/100/FD_align-08-512.png"}},
-  {name:"PLastic bag", cost:0.1, image:{thumbnail:"https://cdn1.iconfinder.com/data/icons/food-drink-7/100/FD_align-08-512.png"}},
-  {name:"Coke cup", cost:0.1, image:{thumbnail:"https://cdn1.iconfinder.com/data/icons/food-drink-7/100/FD_align-08-512.png"}}
-]
+var MOCK_DATA = [{name:"Coffee Mug", cost:0.1, image:{thumbnail:"https://cdn1.iconfinder.com/data/icons/food-drink-7/100/FD_align-08-512.png"},count:0},
+                {name:"Plastic bag", cost:0.1, image:{thumbnail:"https://cdn1.iconfinder.com/data/icons/food-drink-7/100/FD_align-08-512.png"},count:0}]
 
-class RubbishList extends Component{
+class PlasticPledge extends Component{
+  constructor(props) {
+    super(props);
+    this.state = {data:MOCK_DATA}
+  }
+
   render(){
-    var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-
-    var dataSource1= ds.cloneWithRows(MOCKED_PLASTIC_DATA)
+    var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
+    const data = this.state.data
+    var dataSource = ds.cloneWithRows(data)
     return(
       <ListView
-        dataSource={dataSource1}
-        renderRow={(rowData) => <RubbishItem>{rowData}</RubbishItem>}
+        dataSource={dataSource}
+        renderRow={this.renderPlastic}
+        style = {styles.listview}
         />
     )
   }
-}
 
-class RubbishItem extends Component{
-  render(){
-    return(
-      <View>
-        <Text>{this.props.name}</Text>
-        <Text>{this.props.cost}</Text>
-      </View>
-    )
-  }
-}
-
-class PlasticPledge extends Component {
-  render() {
+  renderPlastic(item){
     return (
-      <RubbishList>{MOCKED_PLASTIC_DATA}</RubbishList>
+      <View style={styles.container}>
+        <Image
+          source={{uri: item.image.thumbnail}}
+          style={styles.thumbnail}
+        />
+        <View style={styles.rightContainer}>
+          <Text style={styles.title}>{item.name}</Text>
+          <Text style={styles.year}>${item.cost}</Text>
+        </View>
+      </View>
     );
   }
+
+
+
 }
 
-const styles = StyleSheet.create({
+
+var styles = StyleSheet.create({
   container: {
     flex: 1,
+     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
   },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
+  thumbnail: {
+    width: 53,
+    height: 81,
   },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
+  rightContainer: {
+   flex: 1,
+ },
+ listView: {
+    paddingTop: 20,
+    backgroundColor: '#F5FCFF',
   },
+  button: {
+    textAlign: 'center',
+    color: '#ffffff',
+    marginBottom: 7,
+  }
 });
 
 AppRegistry.registerComponent('PlasticPledge', () => PlasticPledge);
